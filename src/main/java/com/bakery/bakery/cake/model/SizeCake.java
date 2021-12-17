@@ -13,12 +13,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "typecakes")
+@Table(name = "sizecakes")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TypeCake {
+public class SizeCake {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,7 +28,4 @@ public class TypeCake {
 
     @Column(name = "description")
     private String description;
-
-    @Column(name = "image")
-    private String image;
 }

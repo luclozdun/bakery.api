@@ -13,12 +13,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "typecakes")
+@Table(name = "fillercakes")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TypeCake {
+public class FillerCake {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

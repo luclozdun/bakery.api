@@ -32,6 +32,5 @@ public class SwaggerConfig {
         .description("Bakery API")
         .version("1.0")
         .contact(new Contact("Luciano Lopez", "https://google.com","lucianolopez4000@hotmail.com")).build();
-
     }
 }
