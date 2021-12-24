@@ -12,5 +12,6 @@ public class CakeRequest {
     private Long tastecakeId;
     private Long quantify;
     private Double price;
+    private Long bakerId;
     private List<FillerCakeId> fillerCakeIds;
 }

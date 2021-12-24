@@ -14,6 +14,7 @@ import com.bakery.bakery.cake.service.SizeCakeService;
 import com.bakery.bakery.cake.service.TasteCakeService;
 import com.bakery.bakery.cake.service.TypeCakeService;
 import com.bakery.bakery.exception.ResourceNotFoundException;
+import com.bakery.bakery.security.service.BakerService;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,9 @@ public class CakeController {
     private FillerCakeService fillerCakeService;
 
     @Autowired
+    private BakerService bakerService;
+
+    @Autowired
     private ModelMapper mapper;
 
     @GetMapping
@@ -64,7 +68,7 @@ public class CakeController {
         var sizeCake = sizeCakeService.getById(request.getSizecakeId()).orElseThrow(() -> new ResourceNotFoundException("Size cake not found"));
         var tasteCake = tasteCakeService.getById(request.getTastecakeId()).orElseThrow(() -> new ResourceNotFoundException("Taste cake not found"));
         var typeCake = typeCakeService.getById(request.getTypecakeId()).orElseThrow(() -> new ResourceNotFoundException("Type cake not found"));
-        
+        var baker = bakerService.getById(request.getBakerId()).orElseThrow(() -> new ResourceNotFoundException("Baker not found"));
         var fillers = request.getFillerCakeIds().stream().map(filler -> {
             try{
                 return fillerCakeService.getById(filler.getFillerId()).orElseThrow(() -> new ResourceNotFoundException("Filler not found"));
@@ -82,6 +86,7 @@ public class CakeController {
         cake.setPrice(request.getPrice());
         cake.setQuantify(request.getQuantify());
         cake.setFillerCakes(fillers);
+        cake.setBaker(baker);
 
         cakeService.create(cake);
         

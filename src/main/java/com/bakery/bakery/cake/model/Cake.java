@@ -14,13 +14,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.bakery.bakery.security.model.Baker;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "cakess")
+@Table(name = "3cakes")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -55,4 +57,8 @@ public class Cake {
     
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<FillerCake> fillerCakes;
+
+    @ManyToOne
+    @JoinColumn(name = "baker_id")
+    private Baker baker;
 }
