@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CustomerRepository extends GenericRepository<Customer, Long>{
-    Optional<Customer> getUserByUsername(String username);
-    Optional<Customer> getUserByEmail(String email);
-    Optional<Customer> getUserByNumber(String number);
+    Optional<Customer> getCustomerByUsername(String username);
+    Optional<Customer> getCustomerByEmail(String email);
+    Optional<Customer> getCustomerByNumber(String number);
 }

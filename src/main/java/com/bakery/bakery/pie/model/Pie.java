@@ -1,12 +1,16 @@
 package com.bakery.bakery.pie.model;
 
 import lombok.*;
+
+import java.util.List;
+
 import javax.persistence.*;
 
+import com.bakery.bakery.order.model.OrderPie;
 import com.bakery.bakery.security.model.Baker;
 
 @Entity
-@Table(name = "3pies")
+@Table(name = "pies")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -45,5 +49,8 @@ public class Pie {
 
     @Column(name = "quantify")
     private Long quantify;
+
+    @OneToMany(mappedBy = "pie", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderPie> orderPies;
 
 }

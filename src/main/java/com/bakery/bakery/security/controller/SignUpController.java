@@ -92,7 +92,7 @@ public class SignUpController {
         var existUsername = customerService.getByUsername(request.getUsername()).orElse(null);
         var existEmail = customerService.getByEmail(request.getEmail()).orElse(null);
         var existNumber = customerService.getByNumber(request.getNumber()).orElse(null);
-
+        
         if (existEmail != null) { throw new ResourceNotFoundException("Email exist"); }
         if (existUsername != null) { throw new ResourceNotFoundException("Username exist"); }
         if (existNumber != null) { throw new ResourceNotFoundException("Number exist"); }

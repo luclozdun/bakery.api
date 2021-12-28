@@ -1,5 +1,6 @@
 package com.bakery.bakery.cake.controller;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -55,14 +56,14 @@ public class CakeController {
     private ModelMapper mapper;
 
     @GetMapping
-    private ResponseEntity<?> getAll() throws Exception{
+    private ResponseEntity<List<CakeResponse>> getAll() throws Exception{
         var entities = cakeService.getAll();
-        //var convert = entities.stream().map(entity -> mapper.map(entity, CakeResponse.class)).collect(Collectors.toList());
-        return new ResponseEntity<>(entities, HttpStatus.OK);
+        var response = entities.stream().map(entity -> mapper.map(entity, CakeResponse.class)).collect(Collectors.toList());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping
-    private ResponseEntity<?> createCake(@Valid @RequestBody CakeRequest request) throws Exception{        
+    private ResponseEntity<CakeResponse> createCake(@Valid @RequestBody CakeRequest request) throws Exception{        
         Cake cake = new Cake();
         var coverCake = coverCakeService.getById(request.getCovercakeId()).orElseThrow(() -> new ResourceNotFoundException("Cover cake not found"));
         var sizeCake = sizeCakeService.getById(request.getSizecakeId()).orElseThrow(() -> new ResourceNotFoundException("Size cake not found"));

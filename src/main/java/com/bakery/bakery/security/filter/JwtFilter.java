@@ -40,14 +40,19 @@ public class JwtFilter extends OncePerRequestFilter{
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String authorizationHeader = request.getHeader("Authorization");
-        String role = request.getHeader("Role");
         String username = null;
         String token = null;
+        String role = null;
+        
         if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
             //"Bearer " 7 chars
             token = authorizationHeader.substring(7);
-            username = jwtUtil.getUsernameFromToken(token);
+            var data = jwtUtil.getAllClaimsFromToken(token); 
+            System.out.println(data.get("role").toString());
+            username = data.get("sub").toString();
+            role = data.get("role").toString();
         }
+        
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails;
             if(role.equals("CUSTOMER")) {

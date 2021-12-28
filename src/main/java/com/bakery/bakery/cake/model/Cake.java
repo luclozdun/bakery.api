@@ -12,8 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.bakery.bakery.order.model.OrderCake;
 import com.bakery.bakery.security.model.Baker;
 
 import lombok.AllArgsConstructor;
@@ -22,7 +24,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "3cakes")
+@Table(name = "cakes")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -61,4 +63,7 @@ public class Cake {
     @ManyToOne
     @JoinColumn(name = "baker_id")
     private Baker baker;
+
+    @OneToMany(mappedBy = "cake", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderCake> orderCakes;
 }

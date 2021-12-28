@@ -43,7 +43,7 @@ public class AuthenticationController {
         if(!validPassword) { throw new ResourceNotFoundException("Invalid Credentials"); }
 
         var userDetails = bakerService.loadUserByUsername(baker.getUsername(), baker.getPassword());
-        var token = jwtUtil.generateToken(userDetails);
+        var token = jwtUtil.generateToken(userDetails, "BAKER");
         return token;
     }
 
@@ -55,7 +55,7 @@ public class AuthenticationController {
         if (!validPassword) { throw new ResourceNotFoundException("Invalid Credentials"); }
 
         var userDetails = customerService.loadUserByUsername(customer.getUsername(), customer.getPassword());
-        var token = jwtUtil.generateToken(userDetails);
+        var token = jwtUtil.generateToken(userDetails, "CUSTOMER");
         return token;
     }
 
@@ -67,7 +67,7 @@ public class AuthenticationController {
         if (!validPassword) { throw new ResourceNotFoundException("Invalid Credentials"); }
 
         var userDetails = ownerService.loadUserByUsername(owner.getUsername(), owner.getPassword());
-        var token = jwtUtil.generateToken(userDetails);
+        var token = jwtUtil.generateToken(userDetails, "OWNER");
         return token;
     }
 }

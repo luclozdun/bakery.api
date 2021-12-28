@@ -27,22 +27,22 @@ public class CustomerServiceImpl extends CrudServiceImpl<Customer, Long> impleme
 
     @Override
     public Optional<Customer> getByUsername(String username) {
-        return repository.getUserByUsername(username);
+        return repository.getCustomerByUsername(username);
     }
 
     @Override
     public Optional<Customer> getByEmail(String email) {
-        return repository.getUserByEmail(email);
+        return repository.getCustomerByEmail(email);
     }
 
     @Override
     public Optional<Customer> getByNumber(String number) {
-        return repository.getUserByNumber(number);
+        return repository.getCustomerByNumber(number);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username, String password) throws UsernameNotFoundException {
-        var customer = repository.getUserByUsername(username).orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
+        var customer = repository.getCustomerByUsername(username).orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
         Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
             authorities.add(new SimpleGrantedAuthority("CUSTOMER"));
         return new User(customer.getUsername(), customer.getPassword(), authorities);

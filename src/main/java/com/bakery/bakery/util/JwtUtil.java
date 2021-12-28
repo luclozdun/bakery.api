@@ -26,6 +26,10 @@ public class JwtUtil implements Serializable{
         return getClaimFromToken(token, Claims::getSubject);
     }
 
+    public String getRoleFromToken(String token) {
+        return getAllClaimsFromToken(token).get("role", String.class);
+    }
+
     //retrieve expiration date from jwt token
     public Date getExpirationDateFromToken(String token) {
         return getClaimFromToken(token, Claims::getExpiration);
@@ -36,7 +40,7 @@ public class JwtUtil implements Serializable{
         return claimsResolver.apply(claims);
     }
     //for retrieveing any information from token we will need the secret key
-    private Claims getAllClaimsFromToken(String token) {
+    public Claims getAllClaimsFromToken(String token) {
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }
 
@@ -47,8 +51,9 @@ public class JwtUtil implements Serializable{
     }
 
     //generate token for user
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(UserDetails userDetails, String role) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("role", role);
         return doGenerateToken(claims, userDetails.getUsername());
     }
 
