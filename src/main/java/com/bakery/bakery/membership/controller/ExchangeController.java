@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import com.bakery.bakery.exception.ResourceNotFoundException;
+import com.bakery.bakery.exception.ResourceNotFoundExceptionRequest;
 import com.bakery.bakery.membership.dto.ExchangeRequest;
 import com.bakery.bakery.membership.dto.ExchangeResponse;
 import com.bakery.bakery.membership.service.ExchangeService;
@@ -40,7 +40,7 @@ public class ExchangeController {
 
     @GetMapping("/{id}")
     private ResponseEntity<ExchangeResponse> getById(@Valid @PathVariable(name = "id") Long id) throws Exception{
-        var entity = exchangeService.getById(id).orElseThrow(() -> new ResourceNotFoundException("Exchange not found"));
+        var entity = exchangeService.getById(id).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Exchange not found"));
         return new ResponseEntity<>(convert.convertToResponse(entity) ,HttpStatus.OK);
     }
 
@@ -53,7 +53,7 @@ public class ExchangeController {
 
     @PutMapping("/{id}")
     private ResponseEntity<ExchangeResponse> update(@Valid @RequestBody ExchangeRequest request, @Valid @PathVariable(name = "id") Long id) throws Exception{
-        var entity = exchangeService.getById(id).orElseThrow(() -> new ResourceNotFoundException("Exchange not found"));
+        var entity = exchangeService.getById(id).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Exchange not found"));
         entity.setName(request.getName());
         entity.setSymbol(request.getSymbol());
         exchangeService.update(entity);

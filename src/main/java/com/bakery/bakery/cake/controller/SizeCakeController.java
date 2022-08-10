@@ -8,7 +8,7 @@ import com.bakery.bakery.cake.dto.SizeCakeRequest;
 import com.bakery.bakery.cake.dto.SizeCakeResponse;
 import com.bakery.bakery.cake.service.SizeCakeService;
 import com.bakery.bakery.cake.util.SizeCakeConvert;
-import com.bakery.bakery.exception.ResourceNotFoundException;
+import com.bakery.bakery.exception.ResourceNotFoundExceptionRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,7 +40,7 @@ public class SizeCakeController {
 
     @GetMapping("/{id}")
     private ResponseEntity<SizeCakeResponse> getById(@Valid @PathVariable(name = "id") Long id) throws Exception{
-        var entity = sizeCakeService.getById(id).orElseThrow(() -> new ResourceNotFoundException("Size cake not found"));
+        var entity = sizeCakeService.getById(id).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Size cake not found"));
         return new ResponseEntity<>(convert.convertToResponse(entity) ,HttpStatus.OK);
     }
 
@@ -53,7 +53,7 @@ public class SizeCakeController {
 
     @PutMapping("/{id}")
     private ResponseEntity<SizeCakeResponse> updateSizeCake(@Valid @PathVariable(name = "id") Long id, @Valid @RequestBody SizeCakeRequest request) throws Exception{
-        var entity = sizeCakeService.getById(id).orElseThrow(() -> new ResourceNotFoundException("Size cake not found"));
+        var entity = sizeCakeService.getById(id).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Size cake not found"));
         entity.setDescription(request.getDescription());
         entity.setName(request.getName());
         sizeCakeService.update(entity);

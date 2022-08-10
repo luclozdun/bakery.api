@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import com.bakery.bakery.exception.ResourceNotFoundException;
+import com.bakery.bakery.exception.ResourceNotFoundExceptionRequest;
 import com.bakery.bakery.pie.dto.SizePieRequest;
 import com.bakery.bakery.pie.dto.SizePieResponse;
 import com.bakery.bakery.pie.service.SizePieService;
@@ -40,7 +40,7 @@ public class SizePieController {
 
     @GetMapping("/{id}")
     private ResponseEntity<SizePieResponse> getById(@Valid @PathVariable(name = "id") Long id) throws Exception{
-        var entity = sizePieService.getById(id).orElseThrow(() -> new ResourceNotFoundException("Size pie not found"));
+        var entity = sizePieService.getById(id).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Size pie not found"));
         return new ResponseEntity<>(convert.convertToResponse(entity) ,HttpStatus.OK);
     }
 
@@ -53,7 +53,7 @@ public class SizePieController {
 
     @PutMapping("/{id}")
     private ResponseEntity<SizePieResponse> updateSizePie(@Valid @RequestBody SizePieRequest request, @Valid @PathVariable(name = "id") Long id) throws Exception{
-        var entity = sizePieService.getById(id).orElseThrow(() -> new ResourceNotFoundException("Size pie not found"));
+        var entity = sizePieService.getById(id).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Size pie not found"));
         entity.setDescription(request.getDescription());
         entity.setName(request.getName());
         return new ResponseEntity<>(convert.convertToResponse(entity) ,HttpStatus.OK);

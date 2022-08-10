@@ -18,19 +18,19 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
     @Bean
-    public Docket mainConfig(){
+    public Docket mainConfig() {
         return new Docket(DocumentationType.SWAGGER_2).select()
-            .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
-            .paths(PathSelectors.any())
-            .build()
-            .apiInfo(apiInfo());
+                .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
+                .paths(PathSelectors.any())
+                .build()
+                .apiInfo(apiInfo());
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-        .title("Bakery")
-        .description("Bakery API")
-        .version("1.0")
-        .contact(new Contact("Luciano Lopez", "https://google.com","lucianolopez4000@hotmail.com")).build();
+                .title("Bakery")
+                .description("Bakery API")
+                .version("1.0")
+                .contact(new Contact("Luciano Lopez", "https://google.com", "lucianolopez4000@hotmail.com")).build();
     }
 }

@@ -18,16 +18,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "bakers")
+@Table(name = "bakea")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Baker extends Person{
+public class Baker extends Person {
     @Column(name = "DNI")
     private String dni;
-    
+
     @Column(name = "docDNI")
     private String docDNI;
 
@@ -51,4 +51,13 @@ public class Baker extends Person{
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "baker")
     private List<Pie> pies;
+
+    @Column(name = "name_bakery")
+    private String nameBakery;
+
+    @Column(name = "cost")
+    private String cost;
+
+    @Column(name = "location")
+    private String location;
 }

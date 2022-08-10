@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import com.bakery.bakery.exception.ResourceNotFoundException;
+import com.bakery.bakery.exception.ResourceNotFoundExceptionRequest;
 import com.bakery.bakery.pie.dto.PieRequest;
 import com.bakery.bakery.pie.dto.PieResponse;
 import com.bakery.bakery.pie.model.Pie;
@@ -65,18 +65,18 @@ public class PieController {
 
     @GetMapping("/{id}")
     private ResponseEntity<PieResponse> getById(@Valid @PathVariable(name = "id") Long id) throws Exception{
-        var entity = pieService.getById(id).orElseThrow(() -> new ResourceNotFoundException("Pie not found"));
+        var entity = pieService.getById(id).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Pie not found"));
         return new ResponseEntity<>(convert.convertToResponse(entity), HttpStatus.OK);
     }
 
     @PostMapping
     private ResponseEntity<PieResponse> createPie(@Valid @RequestBody PieRequest request) throws Exception{
-        var existCoverPie = coverPieService.getById(request.getCoverPieId()).orElseThrow(() -> new ResourceNotFoundException("Cover Pie not found"));
-        var existFormPie = formPieService.getById(request.getFormPieId()).orElseThrow(() -> new ResourceNotFoundException("Form Pie not found"));
-        var existSizePie = sizePieService.getById(request.getSizePieId()).orElseThrow(() -> new ResourceNotFoundException("Size Pie not found"));
-        var existTypeDought = typeDoughtService.getById(request.getTypeDoughtId()).orElseThrow(() -> new ResourceNotFoundException("TypeDought Pie not found"));
-        var existTypePie = typePieService.getById(request.getTypePieId()).orElseThrow(() -> new ResourceNotFoundException("TypePie Pie not found"));
-        var existBaker = bakerService.getById(request.getBakerId()).orElseThrow(() -> new ResourceNotFoundException("Baker Pie not found"));
+        var existCoverPie = coverPieService.getById(request.getCoverPieId()).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Cover Pie not found"));
+        var existFormPie = formPieService.getById(request.getFormPieId()).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Form Pie not found"));
+        var existSizePie = sizePieService.getById(request.getSizePieId()).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Size Pie not found"));
+        var existTypeDought = typeDoughtService.getById(request.getTypeDoughtId()).orElseThrow(() -> new ResourceNotFoundExceptionRequest("TypeDought Pie not found"));
+        var existTypePie = typePieService.getById(request.getTypePieId()).orElseThrow(() -> new ResourceNotFoundExceptionRequest("TypePie Pie not found"));
+        var existBaker = bakerService.getById(request.getBakerId()).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Baker Pie not found"));
 
         var entity = new Pie();
         entity.setCoverPie(existCoverPie);
@@ -94,13 +94,13 @@ public class PieController {
 
     @PutMapping("/{id}")
     private ResponseEntity<PieResponse> updatePie(@Valid @PathVariable(name = "id") Long id ,@Valid @RequestBody PieRequest request) throws Exception{
-        var entity = pieService.getById(id).orElseThrow(() -> new ResourceNotFoundException("Pie not found"));
-        var existCoverPie = coverPieService.getById(request.getCoverPieId()).orElseThrow(() -> new ResourceNotFoundException("Cover Pie not found"));
-        var existFormPie = formPieService.getById(request.getFormPieId()).orElseThrow(() -> new ResourceNotFoundException("Form Pie not found"));
-        var existSizePie = sizePieService.getById(request.getSizePieId()).orElseThrow(() -> new ResourceNotFoundException("Size Pie not found"));
-        var existTypeDought = typeDoughtService.getById(request.getTypeDoughtId()).orElseThrow(() -> new ResourceNotFoundException("TypeDought Pie not found"));
-        var existTypePie = typePieService.getById(request.getTypePieId()).orElseThrow(() -> new ResourceNotFoundException("TypePie Pie not found"));
-        var existBaker = bakerService.getById(request.getBakerId()).orElseThrow(() -> new ResourceNotFoundException("Baker Pie not found"));
+        var entity = pieService.getById(id).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Pie not found"));
+        var existCoverPie = coverPieService.getById(request.getCoverPieId()).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Cover Pie not found"));
+        var existFormPie = formPieService.getById(request.getFormPieId()).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Form Pie not found"));
+        var existSizePie = sizePieService.getById(request.getSizePieId()).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Size Pie not found"));
+        var existTypeDought = typeDoughtService.getById(request.getTypeDoughtId()).orElseThrow(() -> new ResourceNotFoundExceptionRequest("TypeDought Pie not found"));
+        var existTypePie = typePieService.getById(request.getTypePieId()).orElseThrow(() -> new ResourceNotFoundExceptionRequest("TypePie Pie not found"));
+        var existBaker = bakerService.getById(request.getBakerId()).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Baker Pie not found"));
 
         entity.setCoverPie(existCoverPie);
         entity.setFormPie(existFormPie);

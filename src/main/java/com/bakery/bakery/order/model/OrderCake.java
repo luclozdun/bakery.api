@@ -37,7 +37,7 @@ public class OrderCake {
     private Cake cake;
 
     @Column(name = "quantify")
-    private Long quantify;    
+    private Long quantify;
 
     @Column(name = "priceUnid")
     private Double priceUnid;

@@ -8,7 +8,7 @@ import com.bakery.bakery.cake.dto.TypeCakeRequest;
 import com.bakery.bakery.cake.dto.TypeCakeResponse;
 import com.bakery.bakery.cake.service.TypeCakeService;
 import com.bakery.bakery.cake.util.TypeCakeConvert;
-import com.bakery.bakery.exception.ResourceNotFoundException;
+import com.bakery.bakery.exception.ResourceNotFoundExceptionRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,7 +40,7 @@ public class TypeCakeController {
 
     @GetMapping("/{id}")
     private ResponseEntity<TypeCakeResponse> getById(@Valid @PathVariable(name = "id") Long id) throws Exception{
-        var entity = typeCakeService.getById(id).orElseThrow(() -> new ResourceNotFoundException("Type cake not found"));
+        var entity = typeCakeService.getById(id).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Type cake not found"));
         return new ResponseEntity<>(convert.convertToResponse(entity),HttpStatus.OK);
     }
 
@@ -53,7 +53,7 @@ public class TypeCakeController {
 
     @PutMapping("/{id}")
     private ResponseEntity<TypeCakeResponse> updateTypeCake(@Valid @PathVariable(name = "id") Long id, @Valid @RequestBody TypeCakeRequest request) throws Exception{
-        var entity = typeCakeService.getById(id).orElseThrow(() -> new ResourceNotFoundException("Type cake not found"));
+        var entity = typeCakeService.getById(id).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Type cake not found"));
         entity.setDescription(request.getDescription());
         entity.setImage(request.getImage());
         entity.setName(request.getName());

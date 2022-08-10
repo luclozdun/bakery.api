@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import com.bakery.bakery.exception.ResourceNotFoundException;
+import com.bakery.bakery.exception.ResourceNotFoundExceptionRequest;
 import com.bakery.bakery.pie.dto.CoverPieRequest;
 import com.bakery.bakery.pie.dto.CoverPieResponse;
 import com.bakery.bakery.pie.service.CoverPieService;
@@ -40,7 +40,7 @@ public class CoverPieController {
 
     @GetMapping("/{id}")
     private ResponseEntity<CoverPieResponse> getById(@Valid @PathVariable(name = "id") Long id) throws Exception{
-        var coverPie = coverPieService.getById(id).orElseThrow(() -> new ResourceNotFoundException("coverPie not found"));
+        var coverPie = coverPieService.getById(id).orElseThrow(() -> new ResourceNotFoundExceptionRequest("coverPie not found"));
         return new ResponseEntity<>(convert.convertToResponse(coverPie), HttpStatus.OK);
     }
 
@@ -53,7 +53,7 @@ public class CoverPieController {
 
     @PutMapping("/{id}")
     private ResponseEntity<CoverPieResponse> updateCoverPie(@Valid @PathVariable(name = "id") Long id, @RequestBody CoverPieRequest request) throws Exception{
-        var coverPie = coverPieService.getById(id).orElseThrow(() -> new ResourceNotFoundException("CoverPie not found"));
+        var coverPie = coverPieService.getById(id).orElseThrow(() -> new ResourceNotFoundExceptionRequest("CoverPie not found"));
         coverPie.setName(request.getName());
         coverPie.setDescription(request.getDescription());
         coverPieService.update(coverPie);

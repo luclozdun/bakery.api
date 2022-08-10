@@ -2,7 +2,7 @@ package com.bakery.bakery.security.controller;
 
 import javax.validation.Valid;
 
-import com.bakery.bakery.exception.ResourceNotFoundException;
+import com.bakery.bakery.exception.ResourceNotFoundExceptionRequest;
 import com.bakery.bakery.security.dto.BakerRequest;
 import com.bakery.bakery.security.dto.BakerResponse;
 import com.bakery.bakery.security.dto.CustomerRequest;
@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/signups")
 public class SignUpController {
-    
+
     @Autowired
     private BakerService bakerService;
 
@@ -51,51 +51,74 @@ public class SignUpController {
     private OwnerConvert ownerConvert;
 
     @PostMapping("/baker")
-    private ResponseEntity<BakerResponse> createBaker(@Valid @RequestBody BakerRequest request) throws Exception{
+    private ResponseEntity<BakerResponse> createBaker(@Valid @RequestBody BakerRequest request) throws Exception {
         var existUsername = bakerService.getBakerByUsername(request.getUsername()).orElse(null);
         var existEmail = bakerService.getBakerByEmail(request.getEmail()).orElse(null);
         var existNumber = bakerService.getBakerByNumber(request.getNumber()).orElse(null);
         var existDNI = bakerService.getBakerByDni(request.getDni()).orElse(null);
         var existRUC = bakerService.getBakerByRuc(request.getRuc()).orElse(null);
 
-        if (existEmail != null) { throw new ResourceNotFoundException("Email exist"); }
-        if (existUsername != null) { throw new ResourceNotFoundException("Username exist"); }
-        if (existNumber != null) { throw new ResourceNotFoundException("Number exist"); }
-        if (existDNI != null) { throw new ResourceNotFoundException("DNI exist"); }
-        if (existRUC != null) { throw new ResourceNotFoundException("RUC exist"); }
+        if (existEmail != null) {
+            throw new ResourceNotFoundExceptionRequest("Email exist");
+        }
+        if (existUsername != null) {
+            throw new ResourceNotFoundExceptionRequest("Username exist");
+        }
+        if (existNumber != null) {
+            throw new ResourceNotFoundExceptionRequest("Number exist");
+        }
+        if (existDNI != null) {
+            throw new ResourceNotFoundExceptionRequest("DNI exist");
+        }
+        if (existRUC != null) {
+            throw new ResourceNotFoundExceptionRequest("RUC exist");
+        }
 
         var entity = bakerConvert.convertToEntity(request);
         entity.setPassword(cryptService.encryptPassword(entity.getPassword()));
-        //entity.setCakes();
+        // entity.setCakes();
         bakerService.create(entity);
-        return new ResponseEntity<>(bakerConvert.convertToResponse(entity) ,HttpStatus.OK);
+        return new ResponseEntity<>(bakerConvert.convertToResponse(entity), HttpStatus.OK);
     }
 
     @PostMapping("/owner")
-    private ResponseEntity<OwnerResponse> createOwner(@Valid @RequestBody OwnerRequest request) throws Exception{
+    private ResponseEntity<OwnerResponse> createOwner(@Valid @RequestBody OwnerRequest request) throws Exception {
         var existUsername = ownerService.getByUsername(request.getUsername()).orElse(null);
         var existEmail = ownerService.getByEmail(request.getEmail()).orElse(null);
         var existNumber = ownerService.getByNumber(request.getNumber()).orElse(null);
 
-        if (existEmail != null) { throw new ResourceNotFoundException("Email exist"); }
-        if (existUsername != null) { throw new ResourceNotFoundException("Username exist"); }
-        if (existNumber != null) { throw new ResourceNotFoundException("Number exist"); }
+        if (existEmail != null) {
+            throw new ResourceNotFoundExceptionRequest("Email exist");
+        }
+        if (existUsername != null) {
+            throw new ResourceNotFoundExceptionRequest("Username exist");
+        }
+        if (existNumber != null) {
+            throw new ResourceNotFoundExceptionRequest("Number exist");
+        }
 
         var entity = ownerConvert.convertToEntity(request);
         entity.setPassword(cryptService.encryptPassword(entity.getPassword()));
         ownerService.create(entity);
-        return new ResponseEntity<>(ownerConvert.convertToResponse(entity) ,HttpStatus.OK);
+        return new ResponseEntity<>(ownerConvert.convertToResponse(entity), HttpStatus.OK);
     }
 
     @PostMapping("/customer")
-    private ResponseEntity<CustomerResponse> createCustomer(@Valid @RequestBody CustomerRequest request) throws Exception{
+    private ResponseEntity<CustomerResponse> createCustomer(@Valid @RequestBody CustomerRequest request)
+            throws Exception {
         var existUsername = customerService.getByUsername(request.getUsername()).orElse(null);
         var existEmail = customerService.getByEmail(request.getEmail()).orElse(null);
         var existNumber = customerService.getByNumber(request.getNumber()).orElse(null);
-        
-        if (existEmail != null) { throw new ResourceNotFoundException("Email exist"); }
-        if (existUsername != null) { throw new ResourceNotFoundException("Username exist"); }
-        if (existNumber != null) { throw new ResourceNotFoundException("Number exist"); }
+
+        if (existEmail != null) {
+            throw new ResourceNotFoundExceptionRequest("Email exist");
+        }
+        if (existUsername != null) {
+            throw new ResourceNotFoundExceptionRequest("Username exist");
+        }
+        if (existNumber != null) {
+            throw new ResourceNotFoundExceptionRequest("Number exist");
+        }
 
         var entity = customerConvert.convertToEntity(request);
         entity.setPassword(cryptService.encryptPassword(entity.getPassword()));

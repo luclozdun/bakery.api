@@ -8,7 +8,7 @@ import com.bakery.bakery.cake.dto.FillerCakeRequest;
 import com.bakery.bakery.cake.dto.FillerCakeResponse;
 import com.bakery.bakery.cake.service.FillerCakeService;
 import com.bakery.bakery.cake.util.FillerCakeConvert;
-import com.bakery.bakery.exception.ResourceNotFoundException;
+import com.bakery.bakery.exception.ResourceNotFoundExceptionRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,7 +40,7 @@ public class FillerCakeController {
 
     @GetMapping("/{id}")
     private ResponseEntity<FillerCakeResponse> getById(@Valid @PathVariable(name = "id") Long id) throws Exception{
-        var entity = fillerCakeService.getById(id).orElseThrow(() -> new ResourceNotFoundException("Filler cake not found"));
+        var entity = fillerCakeService.getById(id).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Filler cake not found"));
         return new ResponseEntity<>(convert.convertToResponse(entity) ,HttpStatus.OK);
     }
 
@@ -53,7 +53,7 @@ public class FillerCakeController {
 
     @PutMapping("/{id}")
     private ResponseEntity<FillerCakeResponse> updateFillerCake(@Valid @RequestBody FillerCakeRequest request, @Valid @PathVariable(name = "id") Long id) throws Exception{
-        var entity = fillerCakeService.getById(id).orElseThrow(() -> new ResourceNotFoundException("Filler cake not found"));
+        var entity = fillerCakeService.getById(id).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Filler cake not found"));
         entity.setDescription(request.getDescription());
         entity.setImage(request.getImage());
         entity.setName(request.getName());

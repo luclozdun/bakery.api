@@ -29,7 +29,7 @@ public class ProfileReview {
 
     @Column(name = "DNI")
     private String dni;
-    
+
     @Column(name = "docDNI")
     private String docDNI;
 
@@ -47,6 +47,15 @@ public class ProfileReview {
 
     @Column(name = "license")
     private String license;
+
+    @Column(name = "name_bakery")
+    private String nameBakery;
+
+    @Column(name = "cost")
+    private String cost;
+
+    @Column(name = "location")
+    private String location;
 
     @OneToOne
     @JoinColumn(name = "customer_id")

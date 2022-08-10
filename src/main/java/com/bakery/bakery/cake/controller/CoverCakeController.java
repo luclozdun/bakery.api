@@ -8,7 +8,7 @@ import com.bakery.bakery.cake.dto.CoverCakeRequest;
 import com.bakery.bakery.cake.dto.CoverCakeResponse;
 import com.bakery.bakery.cake.service.CoverCakeService;
 import com.bakery.bakery.cake.util.CoverCakeConvert;
-import com.bakery.bakery.exception.ResourceNotFoundException;
+import com.bakery.bakery.exception.ResourceNotFoundExceptionRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,7 +40,7 @@ public class CoverCakeController {
 
     @GetMapping("/{id}")
     private ResponseEntity<CoverCakeResponse> getById(@Valid @PathVariable(name = "id") Long id) throws Exception{
-        var entity = coverCakeService.getById(id).orElseThrow(() -> new ResourceNotFoundException("Cover Cake not found"));
+        var entity = coverCakeService.getById(id).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Cover Cake not found"));
         return new ResponseEntity<>(convert.convertToResponse(entity) ,HttpStatus.OK);
     }
 
@@ -53,7 +53,7 @@ public class CoverCakeController {
 
     @PutMapping("/{id}")
     private ResponseEntity<CoverCakeResponse> updateCoverCake(@Valid @RequestBody CoverCakeRequest request, @Valid @PathVariable(name = "id") Long id) throws Exception{
-        var entity = coverCakeService.getById(id).orElseThrow(() -> new ResourceNotFoundException("Cover cake not found"));
+        var entity = coverCakeService.getById(id).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Cover cake not found"));
         entity.setDescription(request.getDescription());
         entity.setName(request.getName());
         coverCakeService.update(entity);

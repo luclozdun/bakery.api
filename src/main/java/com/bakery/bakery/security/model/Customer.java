@@ -1,6 +1,5 @@
 package com.bakery.bakery.security.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,11 +16,11 @@ import lombok.Setter;
 @Table(name = "customers")
 @Getter
 @Setter
-public class Customer extends Person{
+public class Customer extends Person {
     @ManyToOne
     @JoinColumn(name = "subscription_id")
     private Subscription subscription;
 
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "customer")
     private ProfileReview profileReview;
 }

@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import com.bakery.bakery.exception.ResourceNotFoundException;
+import com.bakery.bakery.exception.ResourceNotFoundExceptionRequest;
 import com.bakery.bakery.membership.dto.SubscriptionRequest;
 import com.bakery.bakery.membership.dto.SubscriptionResponse;
 import com.bakery.bakery.membership.model.Subscription;
@@ -45,14 +45,14 @@ public class SubscriptionController {
 
     @GetMapping("/{id}")
     private ResponseEntity<SubscriptionResponse> getById(@Valid @PathVariable(name = "id") Long id) throws Exception{
-        var entity = subscriptionService.getById(id).orElseThrow(() -> new ResourceNotFoundException("Subscription not found"));
+        var entity = subscriptionService.getById(id).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Subscription not found"));
         return new ResponseEntity<>(convert.convertToResponse(entity), HttpStatus.OK);
     }
 
     @PostMapping
     private ResponseEntity<SubscriptionResponse> createSubscription(@Valid @RequestBody SubscriptionRequest request) throws Exception{
         Subscription subscription = new Subscription();
-        var existExchange = exchangeService.getById(request.getExchangeId()).orElseThrow(() -> new ResourceNotFoundException("Exchange not found"));
+        var existExchange = exchangeService.getById(request.getExchangeId()).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Exchange not found"));
         
         Date start = new Date();
         Calendar calendar = Calendar.getInstance();

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
-import com.bakery.bakery.exception.ResourceNotFoundException;
+import com.bakery.bakery.exception.ResourceNotFoundExceptionRequest;
 import com.bakery.bakery.repository.GenericRepository;
 import com.bakery.bakery.security.model.Customer;
 import com.bakery.bakery.security.repository.CustomerRepository;
@@ -42,7 +42,7 @@ public class CustomerServiceImpl extends CrudServiceImpl<Customer, Long> impleme
 
     @Override
     public UserDetails loadUserByUsername(String username, String password) throws UsernameNotFoundException {
-        var customer = repository.getCustomerByUsername(username).orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
+        var customer = repository.getCustomerByUsername(username).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Customer not found"));
         Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
             authorities.add(new SimpleGrantedAuthority("CUSTOMER"));
         return new User(customer.getUsername(), customer.getPassword(), authorities);

@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import com.bakery.bakery.exception.ResourceNotFoundException;
+import com.bakery.bakery.exception.ResourceNotFoundExceptionRequest;
 import com.bakery.bakery.pie.dto.FormPieRequest;
 import com.bakery.bakery.pie.dto.FormPieResponse;
 import com.bakery.bakery.pie.service.FormPieService;
@@ -40,7 +40,7 @@ public class FormPieController {
 
     @GetMapping("/{id}")
     private ResponseEntity<FormPieResponse> getById(@Valid @PathVariable(name = "id") Long id) throws Exception{
-        var formPie = formPieService.getById(id).orElseThrow(() -> new ResourceNotFoundException("Form pie not found"));
+        var formPie = formPieService.getById(id).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Form pie not found"));
         return new ResponseEntity<>(convert.convertToResponse(formPie), HttpStatus.OK);
     }
 
@@ -53,7 +53,7 @@ public class FormPieController {
 
     @PutMapping("/{id}")
     private ResponseEntity<FormPieResponse> updateFormPie(@Valid @PathVariable(name = "id") Long id, @Valid @RequestBody FormPieRequest request) throws Exception{
-        var formPie = formPieService.getById(id).orElseThrow(() -> new ResourceNotFoundException("Form pie not found"));
+        var formPie = formPieService.getById(id).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Form pie not found"));
         formPie.setDescription(request.getDescription());
         formPie.setName(request.getName());
         formPieService.update(formPie);

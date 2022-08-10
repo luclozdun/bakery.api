@@ -4,8 +4,5 @@ import lombok.Data;
 
 @Data
 public class ProfileResult {
-    private String message;
     private Long process;
-    private String bakerUsername;
-    private String bakerPassword;
 }

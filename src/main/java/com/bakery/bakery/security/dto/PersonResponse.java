@@ -17,4 +17,5 @@ public class PersonResponse {
     protected String number;
     @JsonFormat(pattern = "dd/MM/yyyy")
     protected Date brithday;
+    protected String token;
 }

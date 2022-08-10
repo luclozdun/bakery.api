@@ -1,9 +1,13 @@
 package com.bakery.bakery.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
-public class ResourceNotFoundException extends RuntimeException{
-    public ResourceNotFoundException(String message) { super(message); }
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class ResourceNotFoundException {
+    private final String message;
+    private final HttpStatus status;
 }

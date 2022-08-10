@@ -7,7 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.bakery.bakery.exception.ResourceNotFoundException;
+import com.bakery.bakery.exception.ResourceNotFoundExceptionRequest;
 import com.bakery.bakery.security.service.BakerService;
 import com.bakery.bakery.security.service.CustomerService;
 import com.bakery.bakery.security.service.OwnerService;
@@ -56,18 +56,18 @@ public class JwtFilter extends OncePerRequestFilter{
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails;
             if(role.equals("CUSTOMER")) {
-                var customer = customerService.getByUsername(username).orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
+                var customer = customerService.getByUsername(username).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Customer not found"));
                 userDetails = customerService.loadUserByUsername(customer.getUsername(), customer.getPassword()); 
             }
             else if(role.equals("BAKER")) {
-                var baker = bakerService.getBakerByUsername(username).orElseThrow(() -> new ResourceNotFoundException("message"));
+                var baker = bakerService.getBakerByUsername(username).orElseThrow(() -> new ResourceNotFoundExceptionRequest("message"));
                 userDetails = bakerService.loadUserByUsername(baker.getUsername(), baker.getPassword()); 
             }
             else if(role.equals("OWNER")){
-                var owner = ownerService.getByUsername(username).orElseThrow(() -> new ResourceNotFoundException("Owner not found"));
+                var owner = ownerService.getByUsername(username).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Owner not found"));
                 userDetails = ownerService.loadUserByUsername(owner.getUsername(), owner.getPassword());
             }
-            else{ throw new ResourceNotFoundException("Excuse me but I don't know"); }            
+            else{ throw new ResourceNotFoundExceptionRequest("Excuse me but I don't know"); }            
 
             if(jwtUtil.validateToken(token, userDetails)){
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

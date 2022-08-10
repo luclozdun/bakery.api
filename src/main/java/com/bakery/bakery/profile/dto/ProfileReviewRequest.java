@@ -12,4 +12,7 @@ public class ProfileReviewRequest {
     private String docSanitation;
     private String permMunicipa;
     private String license;
+    private String location;
+    private String cost;
+    private String nameBakery;
 }

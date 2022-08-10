@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import com.bakery.bakery.exception.ResourceNotFoundException;
+import com.bakery.bakery.exception.ResourceNotFoundExceptionRequest;
 import com.bakery.bakery.pie.dto.TypePieRequest;
 import com.bakery.bakery.pie.dto.TypePieResponse;
 import com.bakery.bakery.pie.service.TypePieService;
@@ -40,7 +40,7 @@ public class TypePieController {
 
     @GetMapping("/{id}")
     private ResponseEntity<TypePieResponse> getById(@Valid @PathVariable(name = "id") Long id) throws Exception{
-        var entity = typePieService.getById(id).orElseThrow(() -> new ResourceNotFoundException("Type pie not found"));
+        var entity = typePieService.getById(id).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Type pie not found"));
         return new ResponseEntity<>(convert.convertToResponse(entity) ,HttpStatus.OK);
     }
 
@@ -53,7 +53,7 @@ public class TypePieController {
 
     @PutMapping("/{id}")
     private ResponseEntity<TypePieResponse> updateTypePie(@Valid @RequestBody TypePieRequest request, @Valid @PathVariable(name = "id") Long id) throws Exception{
-        var entity = typePieService.getById(id).orElseThrow(() -> new ResourceNotFoundException("Type pie not found"));
+        var entity = typePieService.getById(id).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Type pie not found"));
         entity.setDescription(request.getDescription());
         entity.setName(request.getName());
         typePieService.update(entity);

@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import com.bakery.bakery.exception.ResourceNotFoundException;
+import com.bakery.bakery.exception.ResourceNotFoundExceptionRequest;
 import com.bakery.bakery.pie.dto.TypeDoughtRequest;
 import com.bakery.bakery.pie.dto.TypeDoughtResponse;
 import com.bakery.bakery.pie.service.TypeDoughtService;
@@ -41,7 +41,7 @@ public class TypeDoughtController {
 
     @GetMapping("/{id}")
     private ResponseEntity<TypeDoughtResponse> getById(@Valid @PathVariable(name = "id") Long id) throws Exception{
-        var entity = typeDoughtService.getById(id).orElseThrow(() -> new ResourceNotFoundException("Type dought not found"));
+        var entity = typeDoughtService.getById(id).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Type dought not found"));
         return new ResponseEntity<>(convert.convertToResponse(entity) ,HttpStatus.OK);
     }
 
@@ -54,7 +54,7 @@ public class TypeDoughtController {
 
     @PutMapping("/{id}")
     private ResponseEntity<TypeDoughtResponse> updateTypeDought(@Valid @PathVariable(name = "id") Long id, @Valid @RequestBody TypeDoughtRequest request) throws Exception{
-        var entity = typeDoughtService.getById(id).orElseThrow(() -> new ResourceNotFoundException("Type dought not found"));
+        var entity = typeDoughtService.getById(id).orElseThrow(() -> new ResourceNotFoundExceptionRequest("Type dought not found"));
         entity.setDescription(request.getDescription());
         entity.setName(request.getName());
         return new ResponseEntity<>(convert.convertToResponse(entity) ,HttpStatus.OK);

@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class BakerRequest extends PersonRequest{
+public class BakerRequest extends PersonRequest {
     private String dni;
     private String docDNI;
     private String ruc;
@@ -13,4 +13,7 @@ public class BakerRequest extends PersonRequest{
     private String docSanitation;
     private String permMunicipa;
     private String license;
+    private String location;
+    private String nameBakery;
+    private String cost;
 }
